@@ -23,7 +23,7 @@
     background-color: rgba(255, 255, 255, 0.7);
 }
 
-.forecast-day {
+.forecast-day, .forecast-description {
     text-transform: capitalize;
     font-size: 1.1rem;
 }
