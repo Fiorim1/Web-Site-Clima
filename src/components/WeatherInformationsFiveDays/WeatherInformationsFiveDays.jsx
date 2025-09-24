@@ -1,13 +1,11 @@
 import './WeatherInformationsFiveDays.css'
 
-function WeatherInformations({ weatherFiveDays }) {
+function WeatherInformationsFiveDays({ weatherFiveDays }) {
     console.log(weatherFiveDays)
 
-    const dailyForecast = {
+    const dailyForecast = {}
 
-    }
-
-    for (let forecast of weatherFiveDays.list) {
+    for (let forecast of (weatherFiveDays?.list || [])) {
         const date = new Date(forecast.dt * 1000).toLocaleDateString()
 
         if (!dailyForecast[date]) {
@@ -21,10 +19,12 @@ function WeatherInformations({ weatherFiveDays }) {
         const newDate = new Date(date.dt * 1000).toLocaleDateString('pt-BR', {
             weekday: 'long',
             day: '2-digit',
-
         })
-
         return newDate
+    }
+
+    if (!weatherFiveDays || !weatherFiveDays.list) {
+        return <p>Carregando previsão...</p>
     }
 
     return (
@@ -34,12 +34,20 @@ function WeatherInformations({ weatherFiveDays }) {
                 {nextFiveDaysForeCast.map(forecast => (
                     <div key={forecast.dt} className="weather-">
                         <p className="forecast-day">{convertDate(forecast)}</p>
-                        <img src={`http://openweathermap.org/img/wn/${forecast.weather[0].icon}.png`} alt="" />
+                        <img
+                            src={`http://openweathermap.org/img/wn/${forecast.weather[0].icon}.png`}
+                            alt={forecast.weather[0].description}
+                        />
                         <p className="forecast-description">{forecast.weather[0].description}</p>
-                        <p>{Math.round(forecast.main.temp_min)}°C min / {Math.round(forecast.main.temp_max)}°C máx</p>
+                        <p>
+                            {Math.round(forecast.main.temp_min)}°C min 
+                            {Math.round(forecast.main.temp_max)}°C máx
+                        </p>
                     </div>
                 ))}
             </div>
         </div>
     )
 }
+
+export default WeatherInformationsFiveDays
