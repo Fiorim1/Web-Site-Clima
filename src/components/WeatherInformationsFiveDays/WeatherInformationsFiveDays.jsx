@@ -2,6 +2,14 @@ import './WeatherInformationsFiveDays.css'
 
 function WeatherInformationsFiveDays({ weatherFiveDays }) {
     console.log(weatherFiveDays)
+    /* Explicação do código:
+        Esse trecho de código percorre a lista de previsões climáticas (weatherFiveDays.list) — se ela existir, caso contrário usa uma lista vazia —
+        e, para cada previsão (forecast), converte a data/hora fornecida em segundos (forecast.dt) 
+        para uma data legível em formato de string (toLocaleDateString()). Em seguida, 
+        ele verifica se ainda não existe nenhuma previsão armazenada para aquela data dentro do objeto dailyForecast; 
+        se não existir, ele registra a primeira previsão encontrada para esse dia. Na prática, 
+        isso significa que o código está organizando os dados recebidos, 
+        agrupando-os por dia e guardando apenas a primeira previsão de cada data no objeto dailyForecast. */
     for (let forecast of (weatherFiveDays?.list || [])) {
         const date = new Date(forecast.dt * 1000).toLocaleDateString()
         if (!dailyForecast[date]) {
@@ -42,3 +50,4 @@ function WeatherInformationsFiveDays({ weatherFiveDays }) {
     )
 }
 export default WeatherInformationsFiveDays
+
